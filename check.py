@@ -5,6 +5,7 @@ import json
 import time
 import os
 import subprocess
+import itertools
 
 nb = 200 # increase if error given
 
@@ -47,3 +48,35 @@ for event in completed_ids:
             print('Increase nb players pulled in parameter at the top of the file')
 print(len(qualified_players))
 print(qualified_players)
+
+#"RU" "BY"
+
+#def checkPlayers(players)
+#post
+#text/plain
+#content type application/json
+#https://lichess.org/api/users
+
+#profile country
+
+def chunked_iterable(iterable, size):
+    it = iter(iterable)
+    while True:
+        chunk = tuple(itertools.islice(it, size))
+        if not chunk:
+            break
+        yield chunk
+
+warn = set()
+
+for chunk in chunked_iterable(list(qualified_players), 300):
+    data = ','.join(chunk)
+    headers = {'Content-Type': 'text/plain'}
+    profiles = requests.post('https://lichess.org/api/users', data=data)
+    for player in profiles.json():
+        if not player.get('profile') or not player['profile'].get('country'):
+            continue
+        if player['profile']['country'] in ('RU', 'BY'):
+            warn.add(player['username'])
+
+print(warn)
