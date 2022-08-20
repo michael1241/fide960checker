@@ -34,6 +34,7 @@ def getEventResults(event):
 
 for event in completed_ids:
     results = getEventResults(event)
+    time.sleep(2)
     added = 0
     for n, player in enumerate(results):
         if player.get('title'):
@@ -78,5 +79,5 @@ for chunk in chunked_iterable(list(qualified_players), 300):
             continue
         if player['profile']['country'] in ('RU', 'BY'):
             warn.add(player['username'])
-
+    time.sleep(2)
 print(warn)
