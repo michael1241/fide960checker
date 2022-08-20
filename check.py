@@ -4,6 +4,7 @@ import requests
 import json
 import time
 import os
+import subprocess
 
 nb = 200 # increase if error given
 
@@ -17,7 +18,7 @@ completed_ids = [event['id'] for event in sorted(completed, key=lambda d: d['sta
 qualified_players = set()
 
 def getEventResults(event):
-    if not os.path.exists(f'{event}.ndjson') or os.system(f'wc -l {event}.ndjson') < nb:
+    if not os.path.exists(f'{event}.ndjson') or int(subprocess.check_output(['wc', '-l', f'{event}.ndjson']).split()[0]) < nb:
         headers = {'Accept': 'application/x-ndjson', 'Content-Type': 'application/x-ndjson'}
         if os.path.exists('token'):
             with open('token', 'r') as f:
