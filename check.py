@@ -47,18 +47,6 @@ for event in completed_ids:
             break
         if n == 199:
             print('Increase nb players pulled in parameter at the top of the file')
-print(len(qualified_players))
-print(qualified_players)
-
-#"RU" "BY"
-
-#def checkPlayers(players)
-#post
-#text/plain
-#content type application/json
-#https://lichess.org/api/users
-
-#profile country
 
 def chunked_iterable(iterable, size):
     it = iter(iterable)
@@ -80,4 +68,8 @@ for chunk in chunked_iterable(list(qualified_players), 300):
         if player['profile']['country'] in ('RU', 'BY'):
             warn.add(player['username'])
     time.sleep(2)
+
+print("The following players qualified so far:")
+print(qualified_players)
+print("The following players should be warned about RU/BY flags:")
 print(warn)
