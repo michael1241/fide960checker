@@ -37,7 +37,7 @@ for event in completed_ids:
     time.sleep(2)
     added = 0
     for n, player in enumerate(results):
-        if player.get('title'):
+        if player.get('title') and player.get('title') != 'LM':
             continue
         if player['username'] in qualified_players:
             continue
