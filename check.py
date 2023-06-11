@@ -20,10 +20,9 @@ completed_ids = [event['id'] for event in sorted(completed, key=lambda d: d['sta
 qualified_players = set()
 
 def linecount(event):
-    match platform.system():
-        case "Linux": return int(subprocess.check_output(['wc', '-l', f'{event}.ndjson']).split()[0])
-        case "Windows": return sum(1 for _ in open(f'{event}.ndjson'))
-
+    system = platform.system()
+    if system ==  "Linux": return int(subprocess.check_output(['wc', '-l', f'{event}.ndjson']).split()[0])
+    if system == "Windows": return sum(1 for _ in open(f'{event}.ndjson'))
 
 def getEventResults(event):
     if not os.path.exists(f'{event}.ndjson') or linecount(event) < nb:
