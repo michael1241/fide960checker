@@ -77,6 +77,6 @@ for chunk in chunked_iterable(list(qualified_players), 300):
     time.sleep(2)
 
 print("The following players qualified so far:")
-print(qualified_players)
+print(sorted(qualified_players, key=str.lower))
 print("The following players should be warned about RU/BY flags:")
-print(warn)
+print(sorted(warn, key=str.lower))
