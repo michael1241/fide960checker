@@ -10,7 +10,7 @@ import itertools
 nb = 200 # increase if error given
 
 with open('events.ndjson', 'r') as f:
-    events = [json.loads(line) for line in f.read().splitlines()[:-1]]
+    events = [json.loads(line) for line in f.read().splitlines()]
 
 now = time.time() * 1000
 completed = list(filter(lambda x: x['finishesAt'] <= now , events))
