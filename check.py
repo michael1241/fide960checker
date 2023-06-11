@@ -6,6 +6,7 @@ import time
 import os
 import subprocess
 import itertools
+import platform
 
 nb = 200 # increase if error given
 
@@ -18,8 +19,14 @@ completed_ids = [event['id'] for event in sorted(completed, key=lambda d: d['sta
 
 qualified_players = set()
 
+def linecount(event):
+    match platform.system():
+        case "Linux": return int(subprocess.check_output(['wc', '-l', f'{event}.ndjson']).split()[0])
+        case "Windows": return sum(1 for _ in open(f'{event}.ndjson'))
+
+
 def getEventResults(event):
-    if not os.path.exists(f'{event}.ndjson') or int(subprocess.check_output(['wc', '-l', f'{event}.ndjson']).split()[0]) < nb:
+    if not os.path.exists(f'{event}.ndjson') or linecount(event) < nb:
         headers = {'Accept': 'application/x-ndjson', 'Content-Type': 'application/x-ndjson'}
         if os.path.exists('token'):
             with open('token', 'r') as f:
