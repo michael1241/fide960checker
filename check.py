@@ -83,5 +83,10 @@ for chunk in chunked_iterable(list(qualified_players), 300):
 
 print("The following players qualified so far:")
 print(sorted(qualified_players, key=str.lower))
+with open('qualified_players', 'w') as f:
+    f.write('\n'.join(sorted(qualified_players, key=str.lower)))
+
 print("The following players should be warned about RU/BY flags:")
 print(sorted(warn, key=str.lower))
+with open('warn_players', 'w') as f:
+    f.write('\n'.join(sorted(warn, key=str.lower)))
