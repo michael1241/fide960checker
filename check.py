@@ -13,6 +13,10 @@ nb = 200 # increase if error given
 with open('events.ndjson', 'r') as f:
     events = [json.loads(line) for line in f.read().splitlines()]
 
+if os.path.exists('excludeplayers'):
+    with open('excludeplayers', 'r') as f:
+        exclude_players = set(f.read().splitlines())
+
 now = time.time() * 1000
 completed = list(filter(lambda x: x['finishesAt'] <= now , events))
 completed_ids = [event['id'] for event in sorted(completed, key=lambda d: d['startsAt'])]
@@ -46,6 +50,8 @@ for event in completed_ids:
         if player.get('title') and player.get('title') != 'LM':
             continue
         if player['username'] in qualified_players:
+            continue
+        if player['username'] in exclude_players:
             continue
         qualified_players.add(player['username'])
         added += 1
